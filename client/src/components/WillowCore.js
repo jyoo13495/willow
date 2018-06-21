@@ -41,8 +41,8 @@ let projectLoad = false;
 class WillowCore extends Component {
     componentDidMount() {
 
-        this.reset = this.reset.bind(this);
         projectLoad = false;
+        this.reset = this.reset.bind(this);
         this.placeNewNode = this.placeNewNode.bind(this);
         this.closeContextMenu = this.closeContextMenu.bind(this);
         this.reset = this.reset.bind(this);
