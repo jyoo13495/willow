@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as d3 from 'd3';
 
 import v4 from 'uuid/v4';
 import { modalClose, modalOpen } from '../actions/modal';
@@ -7,14 +8,12 @@ import { resetNodeTitle } from '../actions/projects';
 import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
 import { closeNoteView, addNote, resetNotes } from '../actions/notes';
 import { populateMilestone, resetMilestones } from '../actions/milestone';
+import { projectSave, projectGetData } from '../actions/project';
 
 import Modals from '../containers/Modal_NEW/Modals';
 import ExplorativeNode from '../containers/ExplorativeNode';
 import Milestones from '../containers/Milestones/MilestoneColumn';
 
-import { projectSave, projectGetData } from '../actions/project';
-
-import * as d3 from 'd3';
 import {getNodeColor} from './Willow_helper_functions/getNodeColor';
 import {getNodeIcon} from './Willow_helper_functions/getNodeIcon';
 import {getIcon} from './Willow_helper_functions/getIcon';
@@ -39,9 +38,9 @@ let zoomState = false;
 
 let projectLoad = false;
 
-
 class WillowCore extends Component {
     componentDidMount() {
+
         this.reset = this.reset.bind(this);
         projectLoad = false;
         this.placeNewNode = this.placeNewNode.bind(this);
@@ -91,7 +90,7 @@ class WillowCore extends Component {
             .attr('class','background')
             .attr('width', '100%')
             .attr('height', '100%')
-            .attr('fill', '#dadada');
+            .attr('fill', 'white');
 
         const zoomLayer = this.zoomSetup();
 
@@ -523,6 +522,7 @@ class WillowCore extends Component {
                         .data(linksData, (d) => d.hash_id)
                         .enter().append('line');
 
+
         link
             .attr('stroke-width', 4)
             .style('stroke', d => getLinkColor(d))
@@ -552,6 +552,34 @@ class WillowCore extends Component {
                         .enter().append('g')
                         .attr('class', 'node');
 
+        const titleBox = node.append('g').attr('class','titlebox')
+
+        titleBox.append('rect')
+        .attr('class', 'nodetitle')
+        .attr('y', -25)
+        .attr('height', 50)
+        .attr('width', 205)
+        .attr('fill', 'black');
+                
+
+        titleBox.append('rect')
+        .attr('class', 'nodetitle')
+        .attr('y', -20)
+        .attr('height', 40)
+        .attr('width', 200)
+        .attr('fill', 'white');
+
+
+        titleBox.append('text')
+            .text((d) => d.node_description)
+            .attr('class', 'nodetitle')
+            .attr('x', '0')
+            .attr('y', '0')
+            .style('text-anchor', 'start')
+            .attr('transform', 'translate(30, 5)')
+            .style('font-size', 13)
+            .style('fill', 'black');
+
         this.createNodeMenu(node);
 
         const nodeList = ['EXPLORATIVE','START_ACTION','NEXT_ACTION','ONE_TIME_OBJECTIVE','RECURRING_OBJECTIVE'];
@@ -567,7 +595,7 @@ class WillowCore extends Component {
 
             newNode
                 .append('circle')
-                .attr('r', 25)
+                .attr('r', 29)
                 .attr('class', 'face')
                 .attr('fill', (d) => getNodeColor(d));
             
@@ -578,17 +606,23 @@ class WillowCore extends Component {
                 .attr('fill', 'black');
         });
 
-        node.append('text')
-            .text((d) => {
-                if (d.node_description.length > 15) return d.node_description.slice(0, 15) + '...';
-                return d.node_description;
-            })
-            .attr('x', '0')
-            .attr('y', '0')
-            .attr('transform', 'translate(0, -40)')
-            .style('font-size', 13)
-            .style('text-anchor', 'middle')
-            .style('fill', 'black');
+
+
+
+        // node.append('text')
+        //     .text((d) => {
+        //         if (d.node_description.length > 15) return d.node_description.slice(0, 15) + '...';
+        //         return d.node_description;
+        //     })
+        //     .attr('x', '0')
+        //     .attr('y', '0')
+        //     .attr('transform', 'translate(0, -40)')
+        //     .style('font-size', 13)
+        //     .style('text-anchor', 'middle')
+        //     .style('fill', 'black');
+
+
+        d3.selectAll('.titlebox').filter(d => d.label_id === 2).style('visibility','hidden')
 
         d3.selectAll('.node')
             .filter(data => data.status === 'delete')
