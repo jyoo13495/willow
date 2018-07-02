@@ -39,9 +39,9 @@ export const projectSave = (projectData) => {
     let copyObject = Object.assign({}, projectData);
     return (dispatch) => {
         axios.post('/api/updateProject', { project: { nodes: copyObject.nodes, links: copyObject.links ,project: copyObject.project}})
-            .then(response => {
-                dispatch(projectGetData(projectID));
-            });
+            // .then(response => {
+            //     dispatch(projectGetData(projectID));
+            // });
     };
 };
 

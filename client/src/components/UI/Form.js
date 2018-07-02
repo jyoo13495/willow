@@ -13,7 +13,7 @@ class Form extends Component {
 
 	handleInputChange = (id) => (evt) => {
 		const currentInputs = this.state.formInputs.slice();
-    currentInputs.forEach((item) => {
+    	currentInputs.forEach((item) => {
 			if (item.id === id) { item.value = evt.target.value; }
 			if (!item.new && item._startValue === item.value) {
 				item.updated = false;

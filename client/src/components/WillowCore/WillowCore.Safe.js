@@ -779,8 +779,8 @@ class WillowCore extends Component {
             .style('visibility', 'hidden');
     }
 
-    //--------------------------------------------------------------------------------- MENU SETTINGS
-    //--------------------------------------------------- CLICK OPEN NODE MENU*
+//--------------------------------------------------------------------------------- MENU SETTINGS
+//--------------------------------------------------- CLICK OPEN NODE MENU*
     clickOpenNodeMenu(d) {
         if (d3State.newLinkMode) {
             d3.select('.LINKMODE1').remove();
@@ -879,7 +879,7 @@ class WillowCore extends Component {
         }
     }
 
-    //--------------------------------------------------- DISPLAY MENU BUTTON
+//--------------------------------------------------- DISPLAY MENU BUTTON
     clickDisplayMenuMode(d) {
         const selectedNode = d3State.selectedNode;
         let content;
@@ -936,7 +936,7 @@ class WillowCore extends Component {
         });
     }
 
-    //--------------------------------------------------- DRAG NODE
+//--------------------------------------------------- DRAG NODE
     drag_start(d, simulation) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
         if (d.status !== 'new') d.status = 'updated';
@@ -964,7 +964,7 @@ class WillowCore extends Component {
         d.fy = null;
     }
 
-    //--------------------------------------------------- RENDER
+//--------------------------------------------------- RENDER
     render() {
         return (
             <div id='chart'>
